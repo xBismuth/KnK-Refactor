@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+ 
 <!doctype html>
 <html lang="en">
 <head>
@@ -500,7 +500,7 @@ function proceedToVerification() {
     signinBtn.classList.add('opacity-75', 'cursor-not-allowed');
   }
 
-  fetch('http://localhost:3000/auth/send-login-code', {
+  fetch('/auth/send-login-code', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password })
@@ -603,7 +603,7 @@ async function verifyLoginCode() {
   }
 
   try {
-    const res = await fetch('http://localhost:3000/auth/verify-login-code', {
+    const res = await fetch('/auth/verify-login-code', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: userEmail, code })
@@ -670,7 +670,7 @@ function resendLoginCode() {
     return;
   }
 
-  fetch('http://localhost:3000/auth/send-login-code', {
+  fetch('/auth/send-login-code', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email: userEmail, password: userPassword })
@@ -749,7 +749,7 @@ function handleCredentialResponse(response) {
   const idToken = response.credential;
 
   // send to your server
-  fetch('http://localhost:3000/auth/google', {
+  fetch('/auth/google', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ token: idToken })
@@ -875,8 +875,7 @@ function backToCredentials() {
 
 
 </body>
-</html>
-=======
+ </html>
 <!doctype html>
 <html lang="en">
 <head>
@@ -1746,4 +1745,4 @@ function backToCredentials() {
 
 </body>
 </html>
->>>>>>> 395f04aba1d22774e015cb89267868e7de6cd628
+ 

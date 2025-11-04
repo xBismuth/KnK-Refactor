@@ -1,4 +1,7 @@
-// ==================== MAIN SERVER FILE ====================
+// ==================== RAILWAY/RENDER VERSION (WITH SOCKET.IO) ====================
+// This version keeps Socket.IO for real-time features
+// Deploy to Railway or Render
+
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
@@ -25,32 +28,29 @@ const paymongoRoutes = require('./routes/paymongoRoutes');
 const initializeOrderSockets = require('./sockets/orderSockets');
 
 // ==================== INITIALIZATION ====================
-// Lightweight logger helpers for clean, consistent logs
 const ts = () => new Date().toISOString();
 const log = {
   info: (...args) => console.log(`[INFO ${ts()}]`, ...args),
   warn: (...args) => console.warn(`[WARN ${ts()}]`, ...args),
   error: (...args) => console.error(`[ERROR ${ts()}]`, ...args)
 };
+
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// ==================== CORS CONFIGURATION ====================
-// CORS configuration - Update FRONTEND_URL in production
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  ...(process.env.NODE_ENV === 'development' ? ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5500'] : [])
-].filter(Boolean);
 
 // Create HTTP server and Socket.IO
 const server = http.createServer(app);
 
-// CORS configuration for Socket.IO (matches Express CORS)
-const socketIoAllowedOrigins = allowedOrigins.length > 0 ? allowedOrigins : ['*'];
+// CORS configuration for Socket.IO
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'https://your-frontend.vercel.app',
+  ...(process.env.NODE_ENV === 'development' ? ['http://localhost:3000', 'http://localhost:5173'] : [])
+].filter(Boolean);
 
 const io = socketIo(server, {
   cors: {
-    origin: process.env.NODE_ENV === 'development' ? '*' : socketIoAllowedOrigins,
+    origin: allowedOrigins.length > 0 ? allowedOrigins : '*',
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -60,19 +60,10 @@ const io = socketIo(server, {
 app.set('socketio', io);
 
 // ==================== MIDDLEWARE ====================
-
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
-    
-    // In development, allow all origins
-    if (process.env.NODE_ENV === 'development') {
-      return callback(null, true);
-    }
-    
-    // In production, check allowed origins
-    if (allowedOrigins.includes(origin) || allowedOrigins.length === 0) {
+    if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -83,7 +74,6 @@ app.use(cors({
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-app.use(express.static('Public'));
 
 // Request log (dev only)
 if (process.env.NODE_ENV === 'development') {
@@ -105,7 +95,8 @@ app.get('/api/health', (req, res) => {
     database: 'connected',
     paymongo: process.env.PAYMONGO_SECRET_KEY ? 'configured' : 'not configured',
     email: process.env.MAIL_USER ? 'configured' : 'not configured',
-    socketio: 'enabled'
+    socketio: 'enabled',
+    deployment: 'railway/render'
   });
 });
 
@@ -162,17 +153,12 @@ server.listen(PORT, () => {
   const jwtOk = !!process.env.JWT_SECRET;
   const dbName = process.env.DB_NAME || 'kusina_db';
 
-  const allOk = paymongoOk && emailOk && jwtOk;
-
-  if (allOk) {
-    console.log(`\n✅ Ready: http://localhost:${PORT}  (ws enabled)\n   DB: ${dbName}  |  Email: on  |  PayMongo: on\n`);
-  } else {
-    log.info(`Server: http://localhost:${PORT} (ws enabled)`);
-    log.info(`DB: ${dbName}`);
-    log.info(`Email: ${emailOk ? 'on' : 'off'}`);
-    log.info(`PayMongo: ${paymongoOk ? 'on' : 'off'}`);
-    log.info(`JWT: ${jwtOk ? 'custom' : 'default'}`);
-  }
+  log.info(`Server: http://localhost:${PORT} (ws enabled)`);
+  log.info(`DB: ${dbName}`);
+  log.info(`Email: ${emailOk ? 'on' : 'off'}`);
+  log.info(`PayMongo: ${paymongoOk ? 'on' : 'off'}`);
+  log.info(`JWT: ${jwtOk ? 'custom' : 'default'}`);
+  log.info(`CORS Origins: ${allowedOrigins.join(', ')}`);
 });
 
 // ==================== GRACEFUL SHUTDOWN ====================
@@ -208,3 +194,4 @@ process.once('SIGTERM', () => gracefulShutdown('SIGTERM'));
 process.once('SIGINT', () => gracefulShutdown('SIGINT'));
 
 module.exports = { app, server, io };
+

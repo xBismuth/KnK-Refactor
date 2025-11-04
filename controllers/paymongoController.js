@@ -65,11 +65,12 @@ exports.createPaymentIntent = async (req, res) => {
 
     const piId = piResult.data.data.id;
 
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
     const attachResult = await payMongoRequest(`/payment_intents/${piId}/attach`, 'POST', {
       data: {
         attributes: {
           payment_method: pmId,
-          return_url: 'http://localhost:3000/dashboard.html'
+          return_url: `${baseUrl}/dashboard.html`
         }
       }
     });
@@ -126,6 +127,7 @@ exports.createGCashPayment = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Missing required payment data' });
     }
 
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
     const result = await payMongoRequest('/sources', 'POST', {
       data: {
         attributes: {
@@ -133,8 +135,8 @@ exports.createGCashPayment = async (req, res) => {
           amount: amount,
           currency: currency,
           redirect: {
-            success: 'http://localhost:3000/index.html?payment=success',
-            failed: 'http://localhost:3000/index.html?payment=failed'
+            success: `${baseUrl}/index.html?payment=success`,
+            failed: `${baseUrl}/index.html?payment=failed`
           },
           billing: {
             name: customer.name,
