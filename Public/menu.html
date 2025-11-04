@@ -1,0 +1,1241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Menu - Kusina ni Katya</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          accent: '#cda45e',
+          'accent-light': '#e5b66a',
+          'accent-dark': '#b8924e',
+          dark: '#1a1a1a',
+          'dark-light': '#2d2d2d',
+          'light-bg': '#fef9f3',
+          'cream': '#f5e9da',
+        },
+        fontFamily: {
+          Inter: ['Inter', 'sans-serif'],
+        },
+        animation: {
+          'fade-in': 'fadeIn 0.6s ease-out',
+          'slide-up': 'slideUp 0.5s ease-out',
+          'scale-in': 'scaleIn 0.4s ease-out',
+        },
+        keyframes: {
+          fadeIn: {
+            '0%': { opacity: '0' },
+            '100%': { opacity: '1' },
+          },
+          slideUp: {
+            '0%': { transform: 'translateY(30px)', opacity: '0' },
+            '100%': { transform: 'translateY(0)', opacity: '1' },
+          },
+          scaleIn: {
+            '0%': { transform: 'scale(0.9)', opacity: '0' },
+            '100%': { transform: 'scale(1)', opacity: '1' },
+          },
+        },
+      },
+    },
+  }
+</script>
+
+<style>
+@font-face {
+  font-family: 'Quiapo';
+  src: url('assets/fonts/Quiapo_Free.ttf') format('opentype');
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.font-quiapo {
+  font-family: 'Quiapo', 'Inter', sans-serif;
+}
+
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cda45e;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b8924e;
+}
+
+.meal-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.meal-card:hover {
+  transform: translateY(-12px) scale(1.02);
+}
+
+.meal-card.hidden-item {
+  display: none !important;
+}
+
+.pattern-bg {
+  background-color: #fef9f3;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(205, 164, 94, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(205, 164, 94, 0.03) 0%, transparent 50%);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #cda45e, #b8924e);
+  color: white;
+}
+
+/* Cart Modal Styles */
+#cart-modal.show {
+  display: flex !important;
+}
+
+.cart-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #f9f9f9;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.cart-item:hover {
+  background: #f0f0f0;
+  transform: translateX(5px);
+}
+
+.cart-item-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 0.75rem;
+  object-fit: cover;
+}
+
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-item-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+}
+
+.cart-item-price {
+  font-size: 1rem;
+  color: #cda45e;
+  font-weight: 600;
+}
+
+.cart-item-quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.quantity-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #cda45e;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.quantity-btn:hover {
+  background: #b8924e;
+  transform: scale(1.1);
+}
+
+.quantity-display {
+  font-weight: 600;
+  min-width: 30px;
+  text-align: center;
+}
+
+.remove-btn {
+  background: #ef4444;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.remove-btn:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+}
+
+.search-container {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+#search-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 9999px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+#search-input:focus {
+  outline: none;
+  border-color: #cda45e;
+  box-shadow: 0 0 0 3px rgba(205, 164, 94, 0.1);
+}
+
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: #6b7280;
+  font-size: 1.125rem;
+}
+
+.glass-effect {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+
+<body class="bg-light-bg pattern-bg text-dark smooth-scroll overflow-x-hidden">
+
+<!-- HEADER / NAVIGATION -->
+<header class="sticky top-0 z-50 glass-effect bg-white/80 shadow-md transition-all duration-300">
+  <nav class="max-w-full mx-auto px-6 lg:px-12">
+    <div class="flex justify-between items-center h-20">
+      <!-- Logo - Far Left -->
+      <div class="flex items-center space-x-3 animate-fade-in flex-shrink-0">
+        <a href="index.html" class="flex items-center space-x-3">
+          <img 
+            src="assets/images/logo1.png" 
+            alt="Kusina ni Katya Logo" 
+            class="w-14 h-14 object-contain rounded-full shadow-lg"
+          />
+        </a>
+        <div class="hidden sm:block">
+          <h1 class="font-quiapo text-2xl font-bold text-accent tracking-widest">Kusina ni Katya</h1>
+          <p class="text-xs text-gray-600">Authentic Filipino Cuisine</p>
+        </div>
+      </div>
+
+<!-- Desktop Navigation - Far Right -->
+<div class="hidden lg:flex items-center space-x-3">
+  <a href="index.html" class="text-dark-light hover:text-accent font-medium transition-colors duration-300 text-[15px]">
+    Home
+  </a>
+  <a href="menu.html" class="text-dark-light hover:text-accent font-medium transition-colors duration-300 text-[15px]">
+    Menu
+  </a>
+  <a href="orders.html" class="text-dark-light hover:text-accent font-medium transition-colors duration-300 text-[15px]">
+    Orders
+  </a>
+  <a href="contacts.html" class="text-dark-light hover:text-accent font-medium transition-colors duration-300 text-[15px]">
+    Contact
+  </a>
+  
+  <!-- Cart Button -->
+  <a href="#" onclick="goToCart(); return false;" class="px-4 py-2 bg-gradient-to-r from-accent to-accent-dark text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 text-[13px]">
+    🛒 View Cart (<span id="cart-count">0</span>)
+  </a>
+
+  <!-- Auth Buttons - Hidden when logged in -->
+  <div id="auth-buttons" class="flex items-center gap-2">
+    <a href="login.html"
+       class="px-5 py-2.5 bg-white border-2 border-accent text-accent font-semibold rounded-full hover:bg-accent hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300 text-[13px]">
+      Log In
+    </a>
+    <a href="signup.html"
+       class="px-5 py-2.5 bg-gradient-to-r from-accent to-accent-dark text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 text-[13px]">
+      Sign Up
+    </a>
+  </div>
+
+  <!-- User Profile - Shown when logged in -->
+  <div id="user-profile" class="hidden items-center gap-2">
+    <a href="profile.html" class="flex items-center space-x-2 px-3 py-2 bg-accent/10 rounded-full hover:bg-accent/20 transition-all duration-300 cursor-pointer">
+      <div class="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
+        <span id="user-initial" class="text-white font-bold text-xs">U</span>
+      </div>
+      <span id="user-name" class="text-dark font-semibold text-[13px]">User</span>
+    </a>
+    <button onclick="logout()" class="px-5 py-2.5 bg-red-500 text-white font-semibold rounded-full hover:bg-red-600 hover:shadow-lg hover:scale-105 transition-all duration-300 text-[13px]">
+      Logout
+    </button>
+  </div>
+</div>
+
+      <!-- Mobile Menu Button -->
+      <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-300" id="mobile-menu-btn">
+        <svg class="w-6 h-6 text-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden pb-6 animate-slide-up">
+      <div class="flex flex-col space-y-3">
+        <a href="index.html" class="text-dark-light hover:text-accent font-medium py-2 transition-colors duration-300"> Home</a>
+        <a href="menu.html" class="text-dark-light hover:text-accent font-medium py-2 transition-colors duration-300"> Menu</a>
+        <a href="orders.html" class="text-dark-light hover:text-accent font-medium py-2 transition-colors duration-300"> Orders</a>
+        <button onclick="goToCart()" class="text-left text-dark-light hover:text-accent font-medium py-2 transition-colors duration-300">
+          🛒 View Cart (<span id="mobile-cart-count">0</span>)
+        </button>
+        <a href="#contact" class="text-dark-light hover:text-accent font-medium py-2 transition-colors duration-300"> Contact</a>
+        
+        <!-- Auth Buttons for Mobile - Hidden when logged in -->
+        <div id="mobile-auth-buttons" class="flex flex-col space-y-3 pt-3 border-t border-gray-200">
+          <a href="login.html" class="px-6 py-2.5 bg-gradient-to-r from-accent to-accent-dark text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 text-center">
+            Log In
+          </a>
+          <a href="signup.html" class="px-6 py-2.5 border-2 border-accent text-accent font-semibold rounded-full hover:bg-accent hover:text-white hover:shadow-lg hover:scale-105 transition-all duration-300 text-center">
+            Sign Up
+          </a>
+        </div>
+
+        <!-- User Profile for Mobile - Shown when logged in -->
+<div id="mobile-user-profile" class="hidden flex-col space-y-3 pt-3 border-t border-gray-200">
+  <a href="profile.html" class="flex items-center space-x-3 px-4 py-2 bg-accent/10 rounded-full hover:bg-accent/20 transition-all duration-300">
+    <div class="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
+      <span id="mobile-user-initial" class="text-white font-bold">U</span>
+    </div>
+    <span id="mobile-user-name" class="text-dark font-semibold">User</span>
+  </a>
+  <button onclick="logout()" class="px-6 py-2.5 bg-red-500 text-white font-semibold rounded-full hover:bg-red-600 hover:shadow-lg hover:scale-105 transition-all duration-300 text-center">
+    Logout
+  </button>
+</div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-accent-dark/10 to-cream">
+  <div class="max-w-7xl mx-auto text-center">
+    <h1 class="font-quiapo text-5xl md:text-6xl font-bold text-dark mb-4 animate-slide-up">
+     <span class="text-accent">Our Menu</span>
+    </h1>
+    <div class="w-32 h-1 bg-gradient-to-r from-accent-dark via-accent to-accent-light mx-auto rounded-full mb-6"></div>
+    <p class="text-xl text-gray-700 max-w-3xl mx-auto animate-fade-in mb-8">
+      Explore our delicious selection of authentic Filipino dishes, lovingly prepared with traditional recipes and fresh ingredients
+    </p>
+    
+    <!-- Search Bar -->
+    <div class="search-container mt-8">
+      <svg class="search-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
+      <input 
+        type="text" 
+        id="search-input" 
+        placeholder="Search for dishes... (e.g., Adobo, Sinigang, Desserts)"
+        onkeyup="searchMenu()"
+      />
+    </div>
+  </div>
+</section>
+
+<section class="py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      <button onclick="scrollToCategory('all', this)" class="filter-btn active px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gray-100 hover:bg-accent hover:text-white">
+        All Items
+      </button>
+      <button onclick="scrollToCategory('main', this)" class="filter-btn px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gray-100 hover:bg-accent hover:text-white">
+        Main Course
+      </button>
+      <button onclick="scrollToCategory('breakfast', this)" class="filter-btn px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gray-100 hover:bg-accent hover:text-white">
+        Breakfast
+      </button>
+      <button onclick="scrollToCategory('dessert', this)" class="filter-btn px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gray-100 hover:bg-accent hover:text-white">
+        Desserts
+      </button>
+      <button onclick="scrollToCategory('drink', this)" class="filter-btn px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gray-100 hover:bg-accent hover:text-white">
+        Drinks
+      </button>
+    </div>
+
+    <!-- No Results Message -->
+    <div id="no-results" class="no-results hidden">
+      <svg class="w-20 h-20 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <p class="text-xl font-semibold mb-2">No dishes found</p>
+      <p>Try searching for something else or browse all categories</p>
+    </div>
+
+    <!-- Dynamic Menu Grid - Will be populated by JavaScript -->
+    <div id="menu-container">
+      <!-- Loading state -->
+      <div id="loading-state" class="text-center py-12">
+        <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-accent mb-4"></div>
+        <p class="text-xl text-gray-600">Loading delicious dishes...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOATING CART MODAL -->
+<div id="cart-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+  <div class="bg-white rounded-3xl p-8 max-w-2xl w-full mx-4 shadow-2xl animate-scale-in max-h-[80vh] flex flex-col">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6 pb-4 border-b-2 border-accent/30">
+      <h3 class="text-3xl font-bold text-dark">
+        <span class="text-accent">Your Cart</span> 🛒
+      </h3>
+      <button onclick="closeCartModal()" class="text-gray-500 hover:text-accent transition-colors duration-300">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Cart Items -->
+    <div id="cart-items-container" class="flex-1 overflow-y-auto mb-6">
+      <!-- Items will be inserted here -->
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="border-t-2 border-accent/30 pt-4">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-xl font-semibold text-dark">Subtotal:</span>
+        <span id="cart-subtotal" class="text-2xl font-bold text-accent">₱0</span>
+      </div>
+      <div class="flex justify-between items-center mb-6">
+        <span class="text-lg font-semibold text-dark">Total Items:</span>
+        <span id="cart-total-items" class="text-xl font-bold text-dark">0</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-4">
+        <button onclick="closeCartModal()" class="flex-1 px-6 py-3 border-2 border-accent text-accent font-semibold rounded-full hover:bg-accent/10 transition-all duration-300">
+          Continue Shopping
+        </button>
+        <button onclick="proceedToCheckout()" class="flex-1 px-6 py-3 bg-gradient-to-r from-accent to-accent-dark text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300">
+          Proceed to Checkout →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="bg-dark text-white py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      <div class="col-span-1 md:col-span-2">
+        <h3 class="font-quiapo text-3xl font-bold text-accent mb-3">Kusina ni Katya</h3>
+        <p class="text-gray-400 mb-4">Bringing authentic Filipino home cooking to your table since 2020.</p>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-lg mb-4">Quick Links</h4>
+        <ul class="space-y-2 text-gray-400">
+          <li><a href="index.html" class="hover:text-accent transition-colors duration-300">Home</a></li>
+          <li><a href="menu.html" class="hover:text-accent transition-colors duration-300">Menu</a></li>
+          <li><a href="index.html#contact" class="hover:text-accent transition-colors duration-300">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-lg mb-4">Legal</h4>
+        <ul class="space-y-2 text-gray-400">
+          <li><a href="#" class="hover:text-accent transition-colors duration-300">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-accent transition-colors duration-300">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-8 text-center text-gray-400">
+      <p>&copy; 2025 Kusina ni Katya. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ==================== GLOBAL VARIABLES ====================
+let allMenuItems = [];
+let cart = [];
+let socketInitialized = false;
+
+// ==================== INITIALIZATION ====================
+window.addEventListener('DOMContentLoaded', function() {
+  console.log('🚀 Initializing menu page...');
+  // Ensure a stable clientKey exists for this browser
+  try {
+    let key = localStorage.getItem('clientKey');
+    if (!key || key === 'null' || key === 'undefined') {
+      const tpl = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+      key = tpl.replace(/[xy]/g, c => {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+      localStorage.setItem('clientKey', key);
+    }
+  } catch {}
+  
+  // Load auth state
+  checkAuthStatus();
+  
+  // Load cart
+  loadCart();
+  
+  // Fetch menu from API
+  fetchMenuFromAPI();
+  
+  // Close modal when clicking outside
+  const cartModal = document.getElementById('cart-modal');
+  if (cartModal) {
+    cartModal.addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeCartModal();
+      }
+    });
+  }
+  
+  console.log('✅ Menu page initialized');
+});
+
+// ==================== TOAST ====================
+function showToast(message, type = 'info') {
+  try {
+    const id = 'global-toast';
+    const existing = document.getElementById(id);
+    if (existing) existing.remove();
+    const colors = {
+      success: 'bg-green-600',
+      error: 'bg-red-600',
+      info: 'bg-accent'
+    };
+    const div = document.createElement('div');
+    div.id = id;
+    div.className = `fixed bottom-6 right-6 z-50 text-white px-4 py-3 rounded-xl shadow-2xl ${colors[type] || colors.info}`;
+    div.textContent = message;
+    document.body.appendChild(div);
+    setTimeout(() => div.remove(), 2500);
+  } catch {}
+}
+
+// ==================== STORE HOURS ====================
+function isStoreOpen() {
+  const now = new Date();
+  const hours = now.getHours();
+  const day = now.getDay();
+  // Open Monday (1) to Saturday (6), 11:00 - 15:00
+  return day >= 1 && day <= 6 && hours >= 11 && hours < 15;
+}
+
+// ==================== FETCH MENU FROM API ====================
+async function fetchMenuFromAPI() {
+  try {
+    console.log('📡 Fetching menu from API...');
+    const res = await fetch('/api/menu');
+    
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    
+    const data = await res.json();
+    
+    if (!data.success) {
+      throw new Error(data.message || 'Failed to fetch menu');
+    }
+    
+    allMenuItems = data.items || [];
+    console.log('✅ Menu loaded:', allMenuItems.length, 'items');
+    
+    // Render menu
+    renderMenuByCategories();
+    
+    // Initialize Socket.IO for real-time updates
+    initMenuSocketListener();
+    
+  } catch (error) {
+    console.error('❌ Menu fetch error:', error);
+    showMenuError(error.message);
+  }
+}
+
+// ==================== RENDER MENU BY CATEGORIES ====================
+function renderMenuByCategories() {
+  const container = document.getElementById('menu-container');
+  const loadingState = document.getElementById('loading-state');
+  
+  if (!container) {
+    console.error('❌ Menu container not found');
+    return;
+  }
+  
+  // Hide loading state
+  if (loadingState) {
+    loadingState.style.display = 'none';
+  }
+  
+  if (allMenuItems.length === 0) {
+    container.innerHTML = `
+      <div class="text-center py-12">
+        <svg class="w-24 h-24 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+        <p class="text-xl text-gray-500 font-semibold">No menu items available</p>
+        <p class="text-gray-400 mt-2">Check back soon for delicious dishes!</p>
+      </div>
+    `;
+    return;
+  }
+  
+  // Group items by category
+  const categories = {
+    'special': { title: 'Specials', items: [] },
+    'main': { title: 'Main Course', items: [] },
+    'breakfast': { title: 'Breakfast', items: [] },
+    'dessert': { title: 'Desserts', items: [] },
+    'drink': { title: 'Drinks', items: [] }
+  };
+  
+  // Categorize items
+  allMenuItems.forEach(item => {
+    const cat = (item.category || 'main').toLowerCase();
+    if (categories[cat]) {
+      categories[cat].items.push(item);
+    } else {
+      categories['main'].items.push(item);
+    }
+  });
+  
+  // Build HTML
+  let html = '';
+  
+  Object.keys(categories).forEach(catKey => {
+    const category = categories[catKey];
+    
+    if (category.items.length > 0) {
+      html += `
+        <div id="category-${catKey}" class="menu-category mb-16" data-category="${catKey}">
+          <h2 class="text-3xl md:text-4xl font-bold text-dark mb-8 pb-3 border-b-2 border-accent/30">
+            <span class="text-accent">${category.title}</span>
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            ${category.items.map(item => createMenuCardHTML(item, catKey)).join('')}
+          </div>
+        </div>
+      `;
+    }
+  });
+  
+  container.innerHTML = html;
+}
+
+// ==================== CREATE MENU CARD HTML ====================
+function createMenuCardHTML(item, category) {
+  // Determine badge
+  let badgeHtml = '';
+  if (item.badge) {
+    const badgeColors = {
+      'Popular': 'bg-red-600',
+      'New': 'bg-blue-600',
+      'Spicy': 'bg-red-500',
+      'Healthy': 'bg-green-600',
+      'Breakfast': 'bg-orange-600',
+      'Refreshing': 'bg-yellow-500',
+      '20% OFF': 'bg-red-600 animate-pulse'
+    };
+    const badgeColor = badgeColors[item.badge] || 'bg-accent';
+    badgeHtml = `<div class="absolute top-4 right-4 ${badgeColor} text-white px-3 py-1 rounded-full text-sm font-semibold">${escapeHtml(item.badge)}</div>`;
+  }
+  
+  // Use SVG placeholder if no image
+  const imageUrl = item.image_url || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"%3E%3Crect fill="%23f3f4f6" width="400" height="300"/%3E%3Ctext fill="%239ca3af" font-family="Arial,sans-serif" font-size="24" text-anchor="middle" x="200" y="140"%3ENo Image%3C/text%3E%3Ctext fill="%23d1d5db" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" x="200" y="170"%3EAvailable%3C/text%3E%3C/svg%3E';
+  const name = escapeHtml(item.name);
+  const description = escapeHtml(item.description || 'Delicious Filipino dish');
+  const price = parseFloat(item.price || 0).toFixed(2);
+  const nameForJs = escapeJs(item.name);
+  const imageForJs = escapeJs(imageUrl);
+  
+  return `
+    <div class="meal-card group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer" 
+         data-category="${category}" 
+         data-name="${name.toLowerCase()}"
+         data-description="${description.toLowerCase()}">
+      <div class="relative overflow-hidden h-64">
+        <img 
+          src="${imageUrl}" 
+          alt="${name}" 
+          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        ${badgeHtml}
+      </div>
+      <div class="p-6 flex flex-col">
+        <h3 class="text-2xl font-bold text-dark mb-2 group-hover:text-accent transition-colors duration-300">
+          ${name}
+        </h3>
+        <p class="text-gray-600 mb-4 line-clamp-2">
+          ${description}
+        </p>
+        <div class="flex-1"></div>
+        <div class="flex items-center justify-between">
+          <span class="text-accent font-bold text-2xl">₱${price}</span>
+          <button 
+            onclick="addToCart(this, '${nameForJs}', ${item.price}, '${imageForJs}')" 
+            class="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors duration-300 text-sm font-semibold">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ==================== SEARCH MENU ====================
+function searchMenu() {
+  const searchInput = document.getElementById('search-input');
+  const searchTerm = (searchInput?.value || '').toLowerCase().trim();
+  const noResults = document.getElementById('no-results');
+  const allCards = document.querySelectorAll('.meal-card');
+  
+  if (!searchTerm) {
+    // Show all items
+    allCards.forEach(card => card.classList.remove('hidden-item'));
+    if (noResults) noResults.classList.add('hidden');
+    return;
+  }
+  
+  let hasResults = false;
+  
+  allCards.forEach(card => {
+    const dishName = card.getAttribute('data-name') || '';
+    const category = card.getAttribute('data-category') || '';
+    const description = card.getAttribute('data-description') || '';
+    
+    if (dishName.includes(searchTerm) || 
+        category.includes(searchTerm) || 
+        description.includes(searchTerm)) {
+      card.classList.remove('hidden-item');
+      hasResults = true;
+    } else {
+      card.classList.add('hidden-item');
+    }
+  });
+  
+  // Show/hide no results message
+  if (noResults) {
+    if (!hasResults) {
+      noResults.classList.remove('hidden');
+    } else {
+      noResults.classList.add('hidden');
+    }
+  }
+}
+
+// ==================== SCROLL TO CATEGORY ====================
+function scrollToCategory(category, button) {
+  // Update active button
+  const allButtons = document.querySelectorAll('.filter-btn');
+  allButtons.forEach(btn => btn.classList.remove('active'));
+  if (button) {
+    button.classList.add('active');
+  }
+  
+  // Clear search
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) searchInput.value = '';
+  
+  // Show all cards
+  const allCards = document.querySelectorAll('.meal-card');
+  allCards.forEach(card => card.classList.remove('hidden-item'));
+  
+  const noResults = document.getElementById('no-results');
+  if (noResults) noResults.classList.add('hidden');
+  
+  if (category === 'all') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    const categorySection = document.getElementById(`category-${category}`);
+    if (categorySection) {
+      const offset = 100;
+      const elementPosition = categorySection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }
+}
+
+// ==================== SOCKET.IO REAL-TIME UPDATES ====================
+function initMenuSocketListener() {
+  // Disabled to avoid extra client connections; menu refresh uses fetch.
+  return;
+}
+
+// ==================== ERROR HANDLING ====================
+function showMenuError(errorMessage) {
+  const container = document.getElementById('menu-container');
+  const loadingState = document.getElementById('loading-state');
+  
+  if (loadingState) {
+    loadingState.style.display = 'none';
+  }
+  
+  if (!container) return;
+  
+  container.innerHTML = `
+    <div class="text-center py-12">
+      <svg class="w-20 h-20 mx-auto mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <p class="text-xl font-semibold text-gray-700 mb-2">Failed to load menu</p>
+      <p class="text-gray-500 mb-4">${errorMessage || 'Please try again later'}</p>
+      <button onclick="fetchMenuFromAPI()" class="px-6 py-3 bg-accent text-white rounded-full hover:bg-accent-dark transition-colors font-semibold">
+        Retry
+      </button>
+    </div>
+  `;
+}
+
+// ==================== UTILITY FUNCTIONS ====================
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text || '';
+  return div.innerHTML;
+}
+
+function escapeJs(str) {
+  return (str || '').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\\/g, '\\\\');
+}
+
+// ==================== AUTH HELPERS ====================
+function getCurrentUser() {
+  try {
+    const userStr = localStorage.getItem('currentUser');
+    if (!userStr || userStr === 'null' || userStr === 'undefined') return null;
+    const user = JSON.parse(userStr);
+    if (!user || !user.email) return null;
+    return user;
+  } catch (e) {
+    return null;
+  }
+}
+
+// ==================== CART MANAGEMENT ====================
+function getCartKey() {
+  try {
+    const user = getCurrentUser();
+    if (!user) {
+      return 'kusinaCart_guest';
+    }
+    if (user && user.email) {
+      return `kusinaCart_${user.email}`;
+    }
+    
+    return 'kusinaCart_guest';
+  } catch (e) {
+    console.error('Error in getCartKey:', e);
+    return 'kusinaCart_guest';
+  }
+}
+
+function loadCart() {
+  try {
+    const cartKey = getCartKey();
+    const savedCart = localStorage.getItem(cartKey);
+    
+    if (savedCart) {
+      cart = JSON.parse(savedCart);
+    } else {
+      cart = [];
+    }
+    
+    updateCartCount();
+  } catch (e) {
+    console.error('Error loading cart:', e);
+    cart = [];
+    updateCartCount();
+  }
+}
+
+function saveCart() {
+  try {
+    const cartKey = getCartKey();
+    
+    if (cart.length === 0) {
+      localStorage.removeItem(cartKey);
+    } else {
+      localStorage.setItem(cartKey, JSON.stringify(cart));
+    }
+    
+    updateCartCount();
+  } catch (e) {
+    console.error('Error saving cart:', e);
+  }
+}
+
+function addToCart(button, name, price, image) {
+  try {
+    if (!isStoreOpen()) {
+      showToast("We're closed right now. Please come back during opening hours.", 'info');
+      return;
+    }
+    const currentUser = getCurrentUser();
+    if (!currentUser || !currentUser.email) {
+      showToast('Please log in to add items to cart', 'info');
+      window.location.href = 'login.html';
+      return;
+    }
+
+    const existingItem = cart.find(item => item.name === name);
+    
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({
+        id: Date.now(),
+        name: name,
+        price: parseFloat(price),
+        image: image,
+        quantity: 1
+      });
+    }
+    
+    saveCart();
+    
+    // Visual feedback
+    if (button) {
+      const originalText = button.textContent;
+      button.textContent = 'Added! ✓';
+      button.style.backgroundColor = '#10b981';
+      
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.style.backgroundColor = '';
+      }, 1500);
+    }
+  } catch (e) {
+    console.error('Error adding to cart:', e);
+    showToast('Failed to add item to cart', 'error');
+  }
+}
+
+function updateCartCount() {
+  try {
+    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+    
+    const cartCount = document.getElementById('cart-count');
+    const mobileCartCount = document.getElementById('mobile-cart-count');
+    
+    if (cartCount) cartCount.textContent = totalItems;
+    if (mobileCartCount) mobileCartCount.textContent = totalItems;
+  } catch (e) {
+    console.error('Error updating cart count:', e);
+  }
+}
+
+function goToCart() {
+  try {
+    const currentUser = getCurrentUser();
+    if (!currentUser || !currentUser.email) {
+      showToast('Please log in to view your cart', 'info');
+      window.location.href = 'login.html';
+      return;
+    }
+    
+    if (cart.length === 0) {
+      showToast('Your cart is empty!', 'info');
+      return;
+    }
+    
+    openCartModal();
+  } catch (e) {
+    console.error('Error opening cart:', e);
+    showToast('Failed to open cart', 'error');
+  }
+}
+
+function openCartModal() {
+  const modal = document.getElementById('cart-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('show');
+    renderCartItems();
+  }
+}
+
+function closeCartModal() {
+  const modal = document.getElementById('cart-modal');
+  if (modal) {
+    modal.classList.remove('show');
+    modal.classList.add('hidden');
+  }
+}
+
+function renderCartItems() {
+  const container = document.getElementById('cart-items-container');
+  if (!container) return;
+  
+  if (cart.length === 0) {
+    container.innerHTML = `
+      <div class="text-center py-12">
+        <svg class="w-24 h-24 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+        <p class="text-xl text-gray-500 font-semibold">Your cart is empty</p>
+        <p class="text-gray-400 mt-2">Add some delicious items to get started!</p>
+      </div>
+    `;
+    updateCartSummary();
+    return;
+  }
+  
+  let html = '';
+  cart.forEach((item, index) => {
+    const itemTotal = (item.price * item.quantity).toFixed(2);
+    const placeholderSvg = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"%3E%3Crect fill="%23f3f4f6" width="80" height="80" rx="12"/%3E%3Ctext fill="%23cda45e" font-family="Arial,sans-serif" font-size="32" font-weight="bold" text-anchor="middle" x="40" y="50"%3EK%3C/text%3E%3C/svg%3E';
+    html += `
+      <div class="cart-item">
+        <img src="${item.image || placeholderSvg}" alt="${escapeHtml(item.name)}" class="cart-item-image" loading="lazy" />
+        <div class="cart-item-details">
+          <div class="cart-item-name">${escapeHtml(item.name)}</div>
+          <div class="cart-item-price">₱${item.price.toFixed(2)} each</div>
+          <div class="cart-item-quantity">
+            <button class="quantity-btn" onclick="decreaseQuantity(${index})">−</button>
+            <span class="quantity-display">${item.quantity}</span>
+            <button class="quantity-btn" onclick="increaseQuantity(${index})">+</button>
+            <span class="ml-4 font-semibold text-dark">₱${itemTotal}</span>
+          </div>
+        </div>
+        <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+  updateCartSummary();
+}
+
+function increaseQuantity(index) {
+  if (cart[index]) {
+    cart[index].quantity += 1;
+    saveCart();
+    renderCartItems();
+  }
+}
+
+function decreaseQuantity(index) {
+  if (cart[index]) {
+    if (cart[index].quantity > 1) {
+      cart[index].quantity -= 1;
+      saveCart();
+      renderCartItems();
+    } else {
+      removeFromCart(index);
+    }
+  }
+}
+
+function removeFromCart(index) {
+  if (confirm('Remove this item from cart?')) {
+    cart.splice(index, 1);
+    saveCart();
+    
+    if (cart.length > 0) {
+      renderCartItems();
+    } else {
+      closeCartModal();
+      showToast('Your cart is now empty!', 'info');
+    }
+  }
+}
+
+function updateCartSummary() {
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  
+  const subtotalEl = document.getElementById('cart-subtotal');
+  const totalItemsEl = document.getElementById('cart-total-items');
+  
+  if (subtotalEl) subtotalEl.textContent = '₱' + subtotal.toFixed(2);
+  if (totalItemsEl) totalItemsEl.textContent = totalItems;
+}
+
+function proceedToCheckout() {
+  try {
+    if (!isStoreOpen()) {
+      showToast("We're closed right now. Please come back during opening hours.", 'info');
+      closeCartModal();
+      return;
+    }
+    const currentUser = getCurrentUser();
+    if (!currentUser || !currentUser.email) {
+      showToast('Please log in to proceed to checkout', 'info');
+      closeCartModal();
+      window.location.href = 'login.html';
+      return;
+    }
+    
+    if (cart.length === 0) {
+      showToast('Your cart is empty!', 'info');
+      return;
+    }
+    
+    window.location.href = 'cart.html';
+  } catch (e) {
+    console.error('Error proceeding to checkout:', e);
+    showToast('Failed to proceed to checkout', 'error');
+  }
+}
+
+// ==================== AUTH MANAGEMENT ====================
+function checkAuthStatus() {
+  try {
+    const currentUser = getCurrentUser();
+
+    const authButtons = document.getElementById('auth-buttons');
+    const userProfile = document.getElementById('user-profile');
+    const mobileAuthButtons = document.getElementById('mobile-auth-buttons');
+    const mobileUserProfile = document.getElementById('mobile-user-profile');
+
+    if (currentUser && currentUser.email) {
+      // Desktop UI toggle
+      if (authButtons) authButtons.classList.add('hidden');
+      if (userProfile) {
+        userProfile.classList.remove('hidden');
+        userProfile.classList.add('flex');
+      }
+
+      // Mobile UI toggle
+      if (mobileAuthButtons) mobileAuthButtons.classList.add('hidden');
+      if (mobileUserProfile) {
+        mobileUserProfile.classList.remove('hidden');
+        mobileUserProfile.classList.add('flex');
+      }
+
+      // Use full name when available; fall back to email username
+      let fullName = '';
+      if (currentUser.name && currentUser.name.trim().length > 0) {
+        fullName = currentUser.name.trim();
+      } else if (currentUser.email) {
+        fullName = currentUser.email.split('@')[0];
+      } else {
+        fullName = 'User';
+      }
+
+      // First initial for avatar
+      const initial = fullName.charAt(0).toUpperCase();
+
+      // DOM nodes
+      const userName = document.getElementById('user-name');
+      const userInitial = document.getElementById('user-initial');
+      const mobileUserName = document.getElementById('mobile-user-name');
+      const mobileUserInitial = document.getElementById('mobile-user-initial');
+
+      if (userName) userName.textContent = fullName;
+      if (userInitial) userInitial.textContent = initial;
+      if (mobileUserName) mobileUserName.textContent = fullName;
+      if (mobileUserInitial) mobileUserInitial.textContent = initial;
+    } else {
+      // not logged in - restore auth buttons
+      if (authButtons) authButtons.classList.remove('hidden');
+      if (userProfile) {
+        userProfile.classList.add('hidden');
+        userProfile.classList.remove('flex');
+      }
+      if (mobileAuthButtons) mobileAuthButtons.classList.remove('hidden');
+      if (mobileUserProfile) {
+        mobileUserProfile.classList.add('hidden');
+        mobileUserProfile.classList.remove('flex');
+      }
+    }
+  } catch (e) {
+    console.error('Error checking auth status:', e);
+  }
+}
+
+
+function logout() {
+  if (confirm('Are you sure you want to log out?')) {
+    try {
+      // Clear cart
+      const cartKey = getCartKey();
+      localStorage.removeItem(cartKey);
+      cart = [];
+      updateCartCount();
+      
+      // Clear user data
+      localStorage.removeItem('currentUser');
+      sessionStorage.removeItem('authToken');
+      localStorage.removeItem('authToken');
+      
+      // Update UI
+      checkAuthStatus();
+      
+      showToast('✅ You have been logged out successfully!', 'success');
+      window.location.href = 'index.html';
+    } catch (e) {
+      console.error('Error during logout:', e);
+      showToast('Failed to logout properly', 'error');
+    }
+  }
+}
+
+function toggleMobileMenu() {
+  const menu = document.getElementById("mobile-menu");
+  if (menu) {
+    menu.classList.toggle("hidden");
+  }
+}
+</script>
+
+</body>
+</html>
