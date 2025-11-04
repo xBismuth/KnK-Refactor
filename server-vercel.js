@@ -7,8 +7,8 @@ const cors = require('cors');
 require('dotenv').config();
 
 // Import configurations
-// Use PlanetScale for database
-const db = require('./config/db-planetscale');
+// Use Supabase (PostgreSQL) - FREE tier available
+const db = require('./config/db-supabase');
 const { emailTransporter } = require('./config/email');
 
 // Import middlewares
