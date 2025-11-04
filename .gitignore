@@ -1,3 +1,6 @@
-ECHO is on.
-".env" 
-".env" 
+node_modules/
+.env
+Public/env.js
+*.log
+dist/
+coverage/
