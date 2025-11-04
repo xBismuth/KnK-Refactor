@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html lang="en">
 <head>
@@ -875,3 +876,874 @@ function backToCredentials() {
 
 </body>
 </html>
+=======
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In - Kusina ni Katya</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          accent: '#cda45e',
+          'accent-light': '#e5b66a',
+          'accent-dark': '#b8924e',
+          dark: '#1a1a1a',
+          'dark-light': '#2d2d2d',
+          'light-bg': '#fef9f3',
+          cream: '#f5e9da',
+        },
+        fontFamily: {
+          poppins: ['Poppins', 'sans-serif'],
+        },
+        animation: {
+          'fade-in': 'fadeIn 0.6s ease-out forwards',
+          'slide-up': 'slideUp 0.5s ease-out forwards',
+          'scale-in': 'scaleIn 0.4s ease-out forwards',
+          'slide-in-left': 'slideInLeft 0.5s ease-out forwards',
+          'slide-in-right': 'slideInRight 0.5s ease-out forwards',
+          spin: 'spin 1s linear infinite',
+        },
+        keyframes: {
+          fadeIn: {
+            '0%': { opacity: '0' },
+            '100%': { opacity: '1' },
+          },
+          slideUp: {
+            '0%': { transform: 'translateY(30px)', opacity: '0' },
+            '100%': { transform: 'translateY(0)', opacity: '1' },
+          },
+          scaleIn: {
+            '0%': { transform: 'scale(0.9)', opacity: '0' },
+            '100%': { transform: 'scale(1)', opacity: '1' },
+          },
+          slideInLeft: {
+            '0%': { transform: 'translateX(-100%)', opacity: '0' },
+            '100%': { transform: 'translateX(0)', opacity: '1' },
+          },
+          slideInRight: {
+            '0%': { transform: 'translateX(100%)', opacity: '0' },
+            '100%': { transform: 'translateX(0)', opacity: '1' },
+          },
+        },
+      },
+    },
+  };
+</script>
+
+
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.pattern-bg {
+  background-color: #fef9f3;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(205, 164, 94, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(205, 164, 94, 0.05) 0%, transparent 50%);
+}
+
+.input-field {
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(205, 164, 94, 0.2);
+}
+
+.password-toggle {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+  color: #cda45e;
+}
+
+.totp-input {
+  font-size: 1.5rem;
+  letter-spacing: 0.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.g_id_signin {
+  display: flex;
+  justify-content: center;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #cda45e;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+  
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+</style>
+</head>
+
+<body class="bg-light-bg pattern-bg min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+
+<div class="w-full max-w-6xl">
+  <!-- Back to Home Link -->
+  <div class="mb-8 animate-fade-in">
+    <a href="index.html" class="inline-flex items-center text-dark hover:text-accent transition-colors duration-300 group">
+      <svg class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      <span class="font-medium">Back to Home</span>
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+    <!-- Left Side - Branding & Image -->
+    <div class="hidden lg:flex flex-col justify-center items-center bg-gradient-to-br from-accent-dark to-accent rounded-3xl p-12 shadow-2xl animate-slide-in-left">
+      <div class="text-center text-white">
+        <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg overflow-hidden">
+          <img src="assets/images/logo1.png" alt="Kusina ni Katya Logo" class="w-20 h-20 object-contain" onerror="this.style.display='none';">
+        </div>
+        <h1 class="text-4xl font-bold mb-4">Kusina ni Katya</h1>
+        <p class="text-xl mb-6 text-white/90">Authentic Filipino Cuisine</p>
+        <div class="w-32 h-1 bg-white/50 mx-auto rounded-full mb-8"></div>
+        <p class="text-lg text-white/80 max-w-md">Welcome back! Sign in to enjoy exclusive deals, faster checkout, and order tracking!</p>
+        
+        <!-- Decorative Food Icons -->
+        <div class="mt-12 flex justify-center gap-8 text-6xl">
+          <span class="animate-bounce" style="animation-delay: 0s;">🍲</span>
+          <span class="animate-bounce" style="animation-delay: 0.2s;">🍚</span>
+          <span class="animate-bounce" style="animation-delay: 0.4s;">🥘</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Sign In Form -->
+    <div class="bg-white rounded-3xl shadow-2xl p-8 sm:p-12 animate-slide-in-right">
+      <!-- Logo for Mobile -->
+      <div class="lg:hidden text-center mb-8">
+        <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg overflow-hidden border-2 border-accent">
+          <img src="assets/images/logo1.png" alt="Kusina ni Katya Logo" class="w-16 h-16 object-contain" onerror="this.style.display='none';">
+        </div>
+        <h2 class="text-2xl font-bold text-dark">Kusina ni Katya</h2>
+        <p class="text-gray-600 text-sm">Authentic Filipino Cuisine</p>
+      </div>
+
+      <!-- Sign In Form -->
+      <div>
+        <h2 class="text-3xl font-bold text-dark mb-2" id="form-title">Welcome Back!</h2>
+        <p class="text-gray-600 mb-8" id="form-subtitle">Sign in to continue your culinary journey</p>
+
+        <!-- Error Alert -->
+        <div id="error-alert" class="hidden mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p id="error-message" class="text-sm text-red-700"></p>
+          </div>
+        </div>
+
+        <!-- Credentials Form -->
+        <form id="credentials-form" class="transition-all duration-300">
+
+          <!-- Email -->
+          <div class="mb-6">
+            <label class="block text-dark font-semibold mb-2" for="signin-email">Email Address</label>
+            <input type="email" name="email" id="signin-email" required 
+              class="input-field w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-accent focus:outline-none" 
+              placeholder="Email">
+          </div>
+
+          <!-- Password -->
+          <div class="mb-6">
+            <label class="block text-dark font-semibold mb-2" for="signin-password">Password</label>
+            <div class="relative">
+              <input type="password" name="password" id="signin-password" required 
+                class="input-field w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-accent focus:outline-none pr-12" 
+                placeholder="Password">
+              <button type="button" onclick="togglePassword('signin-password', this)" class="password-toggle absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="flex items-center justify-between mb-6">
+            <label class="flex items-center cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent">
+              <span class="ml-2 text-sm text-gray-600">Remember me</span>
+            </label>
+            <a href="#" class="text-sm text-accent hover:text-accent-dark font-semibold transition-colors duration-300">
+              Forgot Password?
+            </a>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="button" id="signin-btn" onclick="proceedToVerification()" 
+            class="w-full py-4 bg-gradient-to-r from-accent to-accent-dark text-white font-bold text-lg rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 mb-6 flex items-center justify-center">
+            <span id="signin-btn-text">Sign In</span>
+            <div id="signin-spinner" class="spinner ml-3 hidden"></div>
+          </button>
+        </form>
+
+        <!-- Email Verification Form -->
+        <form id="verification-form" class="hidden transition-all duration-300">
+          <div class="mb-6 text-center">
+            <div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-dark">Verify Your Email</h3>
+            <p class="text-gray-600 text-sm mt-2">We sent a 6-digit code to <span id="verification-email" class="font-semibold text-accent"></span></p>
+            <p class="text-xs text-gray-500 mt-2">Check your email inbox and spam folder</p>
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-dark font-semibold mb-3 text-center">Verification Code</label>
+            <input 
+              type="text" 
+              id="verification-code" 
+              maxlength="6"
+              pattern="[0-9]{6}"
+              inputmode="numeric"
+              class="totp-input input-field w-full px-4 py-4 border-2 border-gray-200 rounded-lg focus:border-accent focus:outline-none"
+              placeholder="000000"
+            >
+            <p class="text-xs text-gray-500 text-center mt-2">Code expires in <span id="code-timer">10:00</span></p>
+          </div>
+
+          <div id="verification-error" class="hidden mb-4 p-3 bg-red-100 border-l-4 border-red-500 text-red-700 text-sm rounded">
+            Invalid verification code. Please try again.
+          </div>
+
+          <button type="button" onclick="verifyLoginCode()" 
+            class="w-full py-4 bg-gradient-to-r from-accent to-accent-dark text-white font-bold text-lg rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 mb-4">
+            Verify & Sign In
+          </button>
+
+          <div class="flex gap-3">
+            <button type="button" onclick="resendLoginCode()" 
+              class="flex-1 py-3 bg-gray-100 text-dark font-semibold rounded-full hover:bg-gray-200 transition-all duration-300">
+              Resend Code
+            </button>
+            <button type="button" onclick="backToCredentials()" 
+              class="flex-1 py-3 bg-gray-100 text-dark font-semibold rounded-full hover:bg-gray-200 transition-all duration-300">
+              Back
+            </button>
+          </div>
+        </form>
+
+        <!-- Divider -->
+        <div id="divider" class="relative mb-6">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t-2 border-accent/20"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-4 bg-white text-gray-600 font-medium">Or continue with</span>
+          </div>
+        </div>
+
+        <!-- Google Login -->
+        <div id="social-login" class="mb-8">
+          <div id="g_id_onload" data-client_id="185778585245-6o939pgomkeqnse9rsa3th61b2biacsu.apps.googleusercontent.com" data-callback="handleCredentialResponse"></div>
+          <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="signin_with" data-shape="rectangular" data-logo_alignment="left"></div>
+        </div>
+
+        <!-- Sign Up Link -->
+        <div class="text-center">
+          <p class="text-gray-600">
+            Don't have an account? 
+            <a href="signup.html" class="text-accent hover:text-accent-dark font-bold transition-colors duration-300">Sign Up</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div id="success-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+  <div class="bg-white rounded-3xl p-8 max-w-md mx-4 shadow-2xl animate-scale-in text-center">
+    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+    </div>
+    <h3 class="text-2xl font-bold text-dark mb-2" id="modal-title">Success!</h3>
+    <p class="text-gray-600 mb-6" id="modal-message">You have successfully signed in.</p>
+    <button onclick="closeModal()" class="w-full px-6 py-3 bg-gradient-to-r from-accent to-accent-dark text-white font-semibold rounded-full hover:shadow-lg transition-all duration-300">
+      Continue
+    </button>
+  </div>
+</div>
+
+<script>
+/*
+  Rewritten JS for login.html
+  - Keeps UI/markup intact
+  - Fixes verify/send/resend logic, timers, error handling
+  - Keeps Google OAuth working
+  - Removes development-code logging
+*/
+
+/* ---------- Globals (match names used in your HTML) ---------- */
+let userEmail = '';
+let userPassword = '';
+let codeExpiryTimer = null;
+let isSubmitting = false;
+let isVerifying = false;
+
+/* ---------- Small helpers for UI elements that exist in your file ---------- */
+function showErrorAlert(message) {
+  // The original UI used an error alert block with id="error-alert"
+  const el = document.getElementById('error-alert');
+  if (el) {
+    const msgEl = document.getElementById('error-message');
+    if (msgEl) msgEl.textContent = message;
+    el.classList.remove('hidden');
+    // auto-hide after 5s
+    setTimeout(() => el.classList.add('hidden'), 5000);
+  } else {
+    alert(message);
+  }
+}
+
+function hideErrorAlert() {
+  const el = document.getElementById('error-alert');
+  if (el) el.classList.add('hidden');
+}
+
+/* Verification-specific error box (id="verification-error") */
+function showError(message) {
+  const el = document.getElementById('verification-error');
+  if (el) {
+    el.textContent = message;
+    el.classList.remove('hidden');
+    setTimeout(() => el.classList.add('hidden'), 5000);
+  } else {
+    console.warn('verification-error element not found:', message);
+  }
+}
+
+function hideError() {
+  const el = document.getElementById('verification-error');
+  if (el) el.classList.add('hidden');
+}
+
+/* Success modal helpers (ids: success-modal, modal-title, modal-message) */
+function showSuccessModal(title, message) {
+  const modal = document.getElementById('success-modal');
+  if (!modal) {
+    alert(`${title}\n\n${message}`);
+    return;
+  }
+  const titleEl = document.getElementById('modal-title');
+  const msgEl = document.getElementById('modal-message');
+  if (titleEl) titleEl.textContent = title;
+  if (msgEl) msgEl.textContent = message;
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeModal() {
+  const modal = document.getElementById('success-modal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+/* ---------- Timer for verification code (10 minutes) ---------- */
+function startCodeTimer() {
+  clearInterval(codeExpiryTimer);
+  let timeLeft = 10 * 60; // 600 seconds
+
+  const timerEl = document.getElementById('code-timer');
+  if (timerEl) timerEl.textContent = '10:00';
+
+  codeExpiryTimer = setInterval(() => {
+    timeLeft--;
+    const mins = Math.floor(timeLeft / 60);
+    const secs = timeLeft % 60;
+    if (timerEl) timerEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+
+    // visual hints (if classes exist)
+    if (timeLeft <= 60 && timerEl) {
+      timerEl.classList.add('text-red-600');
+      timerEl.classList.remove('text-gray-500');
+    } else if (timeLeft <= 180 && timerEl) {
+      timerEl.classList.add('text-orange-600');
+      timerEl.classList.remove('text-gray-500');
+    }
+
+    if (timeLeft <= 0) {
+      clearInterval(codeExpiryTimer);
+      showError('Verification code expired. Please request a new one.');
+      // disable verify button (if present)
+      const verifyBtn = document.querySelector('button[onclick="verifyLoginCode()"]');
+      if (verifyBtn) {
+        verifyBtn.disabled = true;
+        verifyBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      }
+    }
+  }, 1000);
+}
+
+/* ---------- proceedToVerification: send-login-code ---------- */
+function proceedToVerification() {
+  if (isSubmitting) {
+    console.log('Already submitting login request...');
+    return;
+  }
+
+  const emailInput = document.getElementById('signin-email');
+  const passInput = document.getElementById('signin-password');
+
+  if (!emailInput || !passInput) {
+    showErrorAlert('Login form elements missing in DOM.');
+    return;
+  }
+
+  const email = emailInput.value.trim();
+  const password = passInput.value;
+
+  if (!email || !password) {
+    showErrorAlert('Please enter both email and password');
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    showErrorAlert('Please enter a valid email address');
+    return;
+  }
+
+  if (password.length < 6) {
+    showErrorAlert('Password must be at least 6 characters');
+    return;
+  }
+
+  userEmail = email;
+  userPassword = password;
+  isSubmitting = true;
+  hideErrorAlert();
+
+  // Disable the sign-in button to prevent duplicates
+  const signinBtn = document.getElementById('signin-btn') || document.querySelector('button[onclick="proceedToVerification()"]');
+  if (signinBtn) {
+    signinBtn.disabled = true;
+    signinBtn.classList.add('opacity-75', 'cursor-not-allowed');
+  }
+
+  fetch('http://localhost:3000/auth/send-login-code', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  })
+  .then(async (res) => {
+    // capture JSON if possible, but protect against empty body
+    let payload = null;
+    try { payload = await res.json(); } catch(e) { payload = null; }
+
+    if (!res.ok) {
+      const msg = payload?.message || (res.status === 401 ? 'Invalid email or password' : 'Failed to send verification code');
+      throw new Error(msg);
+    }
+    return payload;
+  })
+  .then((data) => {
+    if (!data) throw new Error('No response from server');
+
+    if (data.success) {
+  // Admin shortcut: skip verification
+  if (data.skipVerification) {
+    // Save admin token & user info and redirect
+    if (data.token) {
+      sessionStorage.setItem('authToken', data.token);
+      localStorage.setItem('adminToken', data.token);  // ← ADD THIS LINE
+    }
+    if (data.user) localStorage.setItem('currentUser', JSON.stringify(data.user));
+
+    showSuccessModal('Welcome Admin!', `Welcome back, ${data.user?.name || 'Admin'}!`);
+
+    setTimeout(() => {
+      window.location.href = 'dashboard.html';
+    }, 1200);
+    return;
+  }
+
+      // Regular flow: show verification form
+      const credentialsForm = document.getElementById('credentials-form');
+      const verificationForm = document.getElementById('verification-form');
+      const divider = document.getElementById('divider');
+      const social = document.getElementById('social-login');
+
+      if (credentialsForm) credentialsForm.classList.add('hidden');
+      if (verificationForm) verificationForm.classList.remove('hidden');
+      if (divider) divider.classList.add('hidden');
+      if (social) social.classList.add('hidden');
+
+      const emailEl = document.getElementById('verification-email');
+      if (emailEl) emailEl.textContent = email;
+
+      const codeInput = document.getElementById('verification-code');
+      if (codeInput) {
+        codeInput.value = '';
+        codeInput.focus();
+      }
+
+      hideError();
+      startCodeTimer();
+    } else {
+      throw new Error(data.message || 'Failed to send verification code');
+    }
+  })
+  .catch(err => {
+    console.error('proceedToVerification error:', err);
+    showErrorAlert(err.message || 'Login failed. Please try again.');
+  })
+  .finally(() => {
+    isSubmitting = false;
+    if (signinBtn) {
+      signinBtn.disabled = false;
+      signinBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+    }
+  });
+}
+
+/* ---------- verifyLoginCode: verify-login-code ---------- */
+async function verifyLoginCode() {
+  if (isVerifying) return;
+  const codeInput = document.getElementById('verification-code');
+  if (!codeInput) {
+    showError('Verification input not found');
+    return;
+  }
+  const code = codeInput.value.trim();
+  if (!/^\d{6}$/.test(code)) {
+    showError('Please enter a valid 6-digit code');
+    return;
+  }
+
+  if (!userEmail) {
+    showError('Session expired. Please login again.');
+    return;
+  }
+
+  isVerifying = true;
+  const verifyBtn = document.querySelector('button[onclick="verifyLoginCode()"]') || null;
+  if (verifyBtn) {
+    verifyBtn.disabled = true;
+    verifyBtn.classList.add('opacity-50', 'cursor-not-allowed');
+  }
+
+  try {
+    const res = await fetch('http://localhost:3000/auth/verify-login-code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: userEmail, code })
+    });
+
+    let payload = null;
+    try { payload = await res.json(); } catch(e) { payload = null; }
+
+    if (!res.ok) {
+      const message = payload?.message || (res.status === 401 ? 'Invalid or expired verification code' : 'Verification failed');
+      throw new Error(message);
+    }
+
+    if (!payload) throw new Error('Empty response from server');
+
+    if (payload.success) {
+      // clear timer
+      try { clearInterval(codeExpiryTimer); } catch (e) {}
+
+      // save token and user object
+      if (payload.token) sessionStorage.setItem('authToken', payload.token);
+      if (payload.user) localStorage.setItem('currentUser', JSON.stringify(payload.user));
+
+      showSuccessModal('Welcome Back!', `Welcome back, ${payload.user?.name || 'User'}!`);
+      hideError();
+
+      setTimeout(() => {
+        if (payload.user?.role === 'admin') {
+          window.location.href = 'dashboard.html';
+        } else {
+          window.location.href = 'index.html';
+        }
+      }, 1000);
+    } else {
+      throw new Error(payload.message || 'Verification failed');
+    }
+  } catch (err) {
+    console.error('verifyLoginCode error:', err);
+    showError(err.message || 'Verification failed. Please try again.');
+  } finally {
+    isVerifying = false;
+    if (verifyBtn) {
+      verifyBtn.disabled = false;
+      verifyBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+    }
+  }
+}
+
+/* ---------- resendLoginCode ---------- */
+function resendLoginCode() {
+  const btn = document.querySelector('button[onclick="resendLoginCode()"]');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+  }
+
+  if (!userEmail || !userPassword) {
+    showError('Session expired. Please re-enter credentials.');
+    if (btn) { btn.disabled = false; btn.textContent = 'Resend Code'; }
+    return;
+  }
+
+  fetch('http://localhost:3000/auth/send-login-code', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: userEmail, password: userPassword })
+  })
+  .then(async (res) => {
+    let payload = null;
+    try { payload = await res.json(); } catch(e) { payload = null; }
+    if (!res.ok) {
+      const msg = payload?.message || 'Failed to resend code';
+      throw new Error(msg);
+    }
+    return payload;
+  })
+  .then(data => {
+    if (data.success) {
+      showSuccessModal('Code Sent!', 'A new verification code has been sent to your email.');
+      const codeInput = document.getElementById('verification-code');
+      if (codeInput) codeInput.value = '';
+      clearInterval(codeExpiryTimer);
+      startCodeTimer();
+      hideError();
+    } else {
+      throw new Error(data.message || 'Failed to resend code');
+    }
+  })
+  .catch(err => {
+    console.error('resendLoginCode error:', err);
+    showError(err.message || 'Failed to resend code. Please try again.');
+  })
+  .finally(() => {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = 'Resend Code';
+    }
+  });
+}
+
+function togglePassword(inputId, button) {
+  const input = document.getElementById(inputId);
+  if (!input) {
+    console.error('Password input not found:', inputId);
+    return;
+  }
+  
+  const isPassword = input.type === 'password';
+  input.type = isPassword ? 'text' : 'password';
+  
+  // Update icon
+  const svg = button.querySelector('svg');
+  if (svg) {
+    if (isPassword) {
+      // Show "eye-off" icon
+      svg.innerHTML = `
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+      `;
+    } else {
+      // Show "eye" icon
+      svg.innerHTML = `
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+      `;
+    }
+  }
+  
+  // Update button aria-label for accessibility
+  button.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+}
+
+/* ---------- Google OAuth callback (keeps working) ---------- */
+function handleCredentialResponse(response) {
+  if (!response || !response.credential) {
+    showErrorAlert('Google sign-in failed to return credentials.');
+    return;
+  }
+
+  const idToken = response.credential;
+
+  // send to your server
+  fetch('http://localhost:3000/auth/google', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: idToken })
+  })
+  .then(async (res) => {
+    let payload = null;
+    try { payload = await res.json(); } catch(e) { payload = null; }
+    if (!res.ok) {
+      const msg = payload?.message || 'Google authentication failed';
+      throw new Error(msg);
+    }
+    return payload;
+  })
+  .then(data => {
+    if (data.success) {
+      if (data.token) sessionStorage.setItem('authToken', data.token);
+      if (data.user) localStorage.setItem('currentUser', JSON.stringify(data.user));
+      showSuccessModal('Welcome!', `Welcome, ${data.user?.name || 'User'}!`);
+      setTimeout(() => {
+        if (data.user?.role === 'admin') window.location.href = 'dashboard.html';
+        else window.location.href = 'index.html';
+      }, 1000);
+    } else {
+      throw new Error(data.message || 'Google auth failed');
+    }
+  })
+  .catch(err => {
+    console.error('handleCredentialResponse error:', err);
+    showErrorAlert(err.message || 'Google authentication failed. Please try again.');
+  });
+}
+
+/* ---------- Small DOM safety + event wiring ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  // wire up modal click to close
+  const successModal = document.getElementById('success-modal');
+  if (successModal) {
+    successModal.addEventListener('click', (e) => {
+      if (e.target === successModal) closeModal();
+    });
+  }
+
+  // verification input: allow only digits and auto-submit on 6 digits
+  const codeInput = document.getElementById('verification-code');
+  if (codeInput) {
+    codeInput.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+      if (e.target.value.length === 6) {
+        // small debounce to allow final keystroke rendering
+        setTimeout(() => verifyLoginCode(), 250);
+      }
+    });
+    codeInput.addEventListener('keypress', (ev) => {
+      if (ev.key === 'Enter') {
+        ev.preventDefault();
+        verifyLoginCode();
+      }
+    });
+  }
+
+  // wire signin inputs to Enter key behavior
+  const emailInput = document.getElementById('signin-email');
+  const passInput = document.getElementById('signin-password');
+  if (emailInput) {
+    emailInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        passInput?.focus();
+      }
+    });
+  }
+  if (passInput) {
+    passInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        proceedToVerification();
+      }
+    });
+  }
+});
+
+/**
+ * Return to credentials form from verification
+ */
+function backToCredentials() {
+  // Clear timer
+  try { clearInterval(codeExpiryTimer); } catch (e) {}
+  
+  // Clear verification input
+  const codeInput = document.getElementById('verification-code');
+  if (codeInput) codeInput.value = '';
+  
+  // Hide verification form
+  const verificationForm = document.getElementById('verification-form');
+  if (verificationForm) verificationForm.classList.add('hidden');
+  
+  // Show credentials form
+  const credentialsForm = document.getElementById('credentials-form');
+  if (credentialsForm) credentialsForm.classList.remove('hidden');
+  
+  // Show divider and social login
+  const divider = document.getElementById('divider');
+  const social = document.getElementById('social-login');
+  if (divider) divider.classList.remove('hidden');
+  if (social) social.classList.remove('hidden');
+  
+  // Clear errors
+  hideError();
+  hideErrorAlert();
+  
+  // Reset global state
+  userEmail = '';
+  userPassword = '';
+  
+  console.log('✅ Returned to credentials form');
+}
+
+</script>
+
+
+</body>
+</html>
+>>>>>>> 395f04aba1d22774e015cb89267868e7de6cd628

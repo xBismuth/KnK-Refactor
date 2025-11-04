@@ -300,6 +300,7 @@ function getAuthToken() {
   return sessionStorage.getItem('authToken') || localStorage.getItem('authToken') || null;
 }
 
+<<<<<<< HEAD
 function getClientKey() {
   try {
     let key = localStorage.getItem('clientKey');
@@ -318,6 +319,8 @@ function getClientKey() {
   }
 }
 
+=======
+>>>>>>> 395f04aba1d22774e015cb89267868e7de6cd628
 /**
  * Get current user from localStorage
  */
@@ -814,6 +817,7 @@ function updateStats() {
 // ==================== SOCKET.IO INITIALIZATION ====================
 
 function initializeSocket() {
+<<<<<<< HEAD
   // Prevent duplicate connections; reuse singleton if present
   if (window.__appSocket && window.__appSocket.connected) {
     socket = window.__appSocket;
@@ -823,6 +827,11 @@ function initializeSocket() {
   if (socket && socket.connected) {
     console.log('⚠️ Socket already connected, skipping initialization');
     window.__appSocket = socket;
+=======
+  // Prevent duplicate connections
+  if (socket && socket.connected) {
+    console.log('⚠️ Socket already connected, skipping initialization');
+>>>>>>> 395f04aba1d22774e015cb89267868e7de6cd628
     return;
   }
   
@@ -846,12 +855,19 @@ function initializeSocket() {
   
   socket = io(window.location.origin, {
     transports: ['websocket', 'polling'],
+<<<<<<< HEAD
     auth: { token: token, clientKey: getClientKey() },
+=======
+    auth: { token: token },
+>>>>>>> 395f04aba1d22774e015cb89267868e7de6cd628
     reconnection: true,
     reconnectionAttempts: Infinity,
     reconnectionDelay: 1000
   });
+<<<<<<< HEAD
   window.__appSocket = socket;
+=======
+>>>>>>> 395f04aba1d22774e015cb89267868e7de6cd628
   
   socket.on('connect', () => {
     console.log('✅ Socket.IO connected:', socket.id);
